@@ -16,4 +16,4 @@ ADD config.json /root/.docker/config.json
 ADD src/ /root/src/
 
 WORKDIR /root/src/
-ENTRYPOINT ["bazel"]
+ENTRYPOINT ["bazel", "run"]

@@ -7,7 +7,7 @@ docker run \
   -e DOCKER_REGISTRY='' \
   -e AWS_ACCESS_KEY_ID='' \
   -e AWS_SECRET_ACCESS_KEY='' \
-  bazelisk-ecr run :push_test
+  bazelisk-ecr :push_test
 ```
 
 Official Bazel Image
