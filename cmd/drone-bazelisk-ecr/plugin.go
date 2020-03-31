@@ -10,8 +10,8 @@ import (
 
 // plugin configuraion
 type plugin struct {
-	Target     string
-	Registry   string
+	Target     string `required:"true"`
+	Registry   string `required:"true"`
 	Repository string
 	Tag        string
 	AccessKey  string `split_words:"true"`

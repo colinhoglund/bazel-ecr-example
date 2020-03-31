@@ -9,6 +9,7 @@ func TestPlugin(t *testing.T) {
 	tests := []struct {
 		env  map[string]string
 		want plugin
+		fail bool
 	}{
 		// test setting struct fields
 		{
@@ -28,11 +29,13 @@ func TestPlugin(t *testing.T) {
 				AccessKey:  "access",
 				SecretKey:  "secret",
 			},
+			fail: false,
 		},
 		// test empty environment
 		{
 			env:  map[string]string{},
 			want: plugin{},
+			fail: true,
 		},
 	}
 
@@ -41,7 +44,7 @@ func TestPlugin(t *testing.T) {
 
 		// check desired output
 		got, err := newPlugin()
-		if err != nil {
+		if err != nil && !test.fail {
 			t.Errorf(err.Error())
 		}
 
