@@ -1,4 +1,4 @@
-# Drone Bazel ECR Example
+# Drone Bazel ECR
 
 Build Image and push to a docker registry
 ```
