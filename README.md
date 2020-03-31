@@ -7,9 +7,9 @@ docker build -t drone-bazelisk-ecr .
 
 Setup a secrets file for `drone exec` in _example/secrets.env_
 ```
-ecr_registry=
-ecr_access_key=
-ecr_secret_key=
+ECR_REGISTRY=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
 ```
 
 ```
