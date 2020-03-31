@@ -5,14 +5,15 @@ name: default
 
 steps:
   - name: publish
-    image: bazelisk-ecr
+    image: drone-bazelisk-ecr
     pull: never
     settings:
       target: :push_test
       tag: dev
+      repository: drone-bazelisk-ecr-example
       registry:
-        from_secret: ecr_registry
+        from_secret: ECR_REGISTRY
       access_key:
-        from_secret: ecr_access_key
+        from_secret: AWS_ACCESS_KEY_ID
       secret_key:
-        from_secret: ecr_secret_key
+        from_secret: AWS_SECRET_ACCESS_KEY

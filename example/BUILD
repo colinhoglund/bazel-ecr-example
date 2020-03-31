@@ -5,6 +5,6 @@ container_push(
    image = "@nginx//image",
    format = "Docker",
    registry = "{STABLE_DOCKER_REGISTRY}",
-   repository = "devops/colin-test",
+   repository = "{STABLE_REPOSITORY_NAME}",
    tag = "{STABLE_IMAGE_TAG}",
 )

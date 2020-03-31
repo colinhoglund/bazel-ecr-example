@@ -7,32 +7,35 @@ import (
 
 // plugin configuraion
 type plugin struct {
-	Command   *exec.Cmd
-	Target    string
-	Registry  string
-	Tag       string
-	AccessKey string
-	SecretKey string
+	Command    *exec.Cmd
+	Target     string
+	Registry   string
+	Repository string
+	Tag        string
+	AccessKey  string
+	SecretKey  string
 }
 
 // plugin constructor
 func newPlugin() (plugin, error) {
 	p := plugin{
-		Target:    os.Getenv("PLUGIN_TARGET"),
-		Registry:  os.Getenv("PLUGIN_REGISTRY"),
-		Tag:       os.Getenv("PLUGIN_TAG"),
-		AccessKey: os.Getenv("PLUGIN_ACCESS_KEY"),
-		SecretKey: os.Getenv("PLUGIN_SECRET_KEY"),
+		Target:     os.Getenv("PLUGIN_TARGET"),
+		Registry:   os.Getenv("PLUGIN_REGISTRY"),
+		Repository: os.Getenv("PLUGIN_REPOSITORY"),
+		Tag:        os.Getenv("PLUGIN_TAG"),
+		AccessKey:  os.Getenv("PLUGIN_ACCESS_KEY"),
+		SecretKey:  os.Getenv("PLUGIN_SECRET_KEY"),
 	}
 
+	// convenience variables to be read by bazel workspace status scripts
 	if p.Registry != "" {
-		// convenience variable to be read by bazel workspace status scripts
-		os.Setenv("DOCKER_REGISTRY", p.Registry)
+		os.Setenv("DRONE_ECR_REGISTRY", p.Registry)
 	}
-
+	if p.Repository != "" {
+		os.Setenv("DRONE_ECR_REPOSITORY", p.Repository)
+	}
 	if p.Tag != "" {
-		// convenience variable to be read by bazel workspace status scripts
-		os.Setenv("IMAGE_TAG", p.Tag)
+		os.Setenv("DRONE_ECR_TAG", p.Tag)
 	}
 
 	// setup the credentials used by the amazon-ecr-credential-helper

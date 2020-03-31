@@ -1,4 +1,4 @@
-# build bazelisk-ecr plugin
+# build drone-bazelisk-ecr plugin
 FROM golang:1.13 AS plugin
 WORKDIR /go/src/app
 COPY . .
@@ -31,8 +31,8 @@ RUN groupadd -g ${BAZEL_USER_ID} -r ${BAZEL_USER} \
  && wget -qO ${ECR_LOGIN_PATH} https://amazon-ecr-credential-helper-releases.s3.us-east-2.amazonaws.com/${ECR_LOGIN_VERSION}/linux-amd64/docker-credential-ecr-login \
  && chmod +x ${ECR_LOGIN_PATH}
 
-COPY --from=plugin /go/bin/bazelisk-ecr /usr/local/bin/bazelisk-ecr
-COPY --chown=${BAZEL_USER}:${BAZEL_USER} config.json ${BAZEL_USER_HOME}/.docker/config.json
+COPY --from=plugin /go/bin/drone-bazelisk-ecr /usr/local/bin/drone-bazelisk-ecr
+COPY --chown=${BAZEL_USER}:${BAZEL_USER} files/config.json ${BAZEL_USER_HOME}/.docker/config.json
 
 USER ${BAZEL_USER}
-ENTRYPOINT ["bazelisk-ecr"]
+ENTRYPOINT ["drone-bazelisk-ecr"]

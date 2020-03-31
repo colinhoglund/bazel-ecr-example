@@ -1,2 +1,2 @@
-src/bazel-*
-src/secret*
+example/bazel-*
+example/secret*

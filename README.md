@@ -1,11 +1,11 @@
-# Drone Bazel ECR
+# drone-bazelisk-ecr
 
 Build Image and push to a docker registry
 ```
-docker build -t bazelisk-ecr .
+docker build -t drone-bazelisk-ecr .
 ```
 
-Setup a secrets file for `drone exec` in _src/secrets.txt_
+Setup a secrets file for `drone exec` in _example/secrets.env_
 ```
 ecr_registry=
 ecr_access_key=
@@ -13,16 +13,12 @@ ecr_secret_key=
 ```
 
 ```
-cd src/
-drone exec --secret-file secrets.txt
+cd example/
+drone exec --secret-file secrets.env
 ```
 
-Official Bazel Image
-- https://console.cloud.google.com/gcr/images/cloud-marketplace-containers/GLOBAL/google/bazel
-- https://github.com/bazelbuild/bazel/issues/4661#issuecomment-420033092
+## Useful Links
 
-Using Bazel Image
-- https://docs.bazel.build/versions/2.0.0/bazel-container.html
-
-Bazel Docker Rules
-- https://github.com/bazelbuild/rules_docker
+- [Amazon ECR Docker Credential Helper](https://github.com/awslabs/amazon-ecr-credential-helper)
+- [bazelisk](https://github.com/bazelbuild/bazelisk)
+- [Bazel Docker Rules](https://github.com/bazelbuild/rules_docker)

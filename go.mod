@@ -1,3 +1,3 @@
-module github.com/mongodb-forks/bazelisk-ecr
+module github.com/colinhoglund/drone-bazelisk-ecr
 
 go 1.13
