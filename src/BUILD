@@ -6,5 +6,5 @@ container_push(
    format = "Docker",
    registry = "{STABLE_DOCKER_REGISTRY}",
    repository = "devops/colin-test",
-   tag = "{RANDOM_HASH}",
+   tag = "{STABLE_IMAGE_TAG}",
 )

@@ -1,0 +1,18 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: publish
+    image: bazelisk-ecr
+    pull: never
+    settings:
+      target: :push_test
+      tag: dev
+      registry:
+        from_secret: ecr_registry
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key

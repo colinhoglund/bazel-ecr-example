@@ -1,13 +1,20 @@
-# Bazel ECR Example
+# Drone Bazel ECR Example
 
+Build Image and push to a docker registry
 ```
 docker build -t bazelisk-ecr .
+```
 
-docker run \
-  -e DOCKER_REGISTRY='' \
-  -e AWS_ACCESS_KEY_ID='' \
-  -e AWS_SECRET_ACCESS_KEY='' \
-  bazelisk-ecr :push_test
+Setup a secrets file for `drone exec` in _src/secrets.txt_
+```
+ecr_registry=
+ecr_access_key=
+ecr_secret_key=
+```
+
+```
+cd src/
+drone exec --secret-file secrets.txt
 ```
 
 Official Bazel Image
