@@ -1,41 +1,40 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/kelseyhightower/envconfig"
 )
 
 // plugin configuraion
 type plugin struct {
-	Command    *exec.Cmd
 	Target     string
 	Registry   string
 	Repository string
 	Tag        string
-	AccessKey  string
-	SecretKey  string
+	AccessKey  string `split_words:"true"`
+	SecretKey  string `split_words:"true"`
 }
 
 // plugin constructor
 func newPlugin() (plugin, error) {
-	p := plugin{
-		Target:     os.Getenv("PLUGIN_TARGET"),
-		Registry:   os.Getenv("PLUGIN_REGISTRY"),
-		Repository: os.Getenv("PLUGIN_REPOSITORY"),
-		Tag:        os.Getenv("PLUGIN_TAG"),
-		AccessKey:  os.Getenv("PLUGIN_ACCESS_KEY"),
-		SecretKey:  os.Getenv("PLUGIN_SECRET_KEY"),
+	var p plugin
+	err := envconfig.Process("plugin", &p)
+	if err != nil {
+		return plugin{}, err
 	}
 
 	// convenience variables to be read by bazel workspace status scripts
 	if p.Registry != "" {
-		os.Setenv("DRONE_ECR_REGISTRY", p.Registry)
+		setEnvWithPrefix("REGISTRY", p.Registry)
 	}
 	if p.Repository != "" {
-		os.Setenv("DRONE_ECR_REPOSITORY", p.Repository)
+		setEnvWithPrefix("REPOSITORY", p.Repository)
 	}
 	if p.Tag != "" {
-		os.Setenv("DRONE_ECR_TAG", p.Tag)
+		setEnvWithPrefix("TAG", p.Tag)
 	}
 
 	// setup the credentials used by the amazon-ecr-credential-helper
@@ -47,10 +46,14 @@ func newPlugin() (plugin, error) {
 	return p, nil
 }
 
-// Exec runs plugin.Command
-func (p *plugin) Exec() error {
-	p.Command = exec.Command("bazel", "run", p.Target)
-	p.Command.Stdout = os.Stdout
-	p.Command.Stderr = os.Stderr
-	return p.Command.Run()
+// runs the bazel command
+func (p *plugin) exec() error {
+	cmd := exec.Command("bazel", "run", p.Target)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+func setEnvWithPrefix(key, val string) {
+	os.Setenv(fmt.Sprintf("%s_%s", "DRONE_ECR", key), val)
 }

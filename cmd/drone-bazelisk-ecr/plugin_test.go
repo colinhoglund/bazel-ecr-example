@@ -45,9 +45,6 @@ func TestPlugin(t *testing.T) {
 			t.Errorf(err.Error())
 		}
 
-		// clear out command object for testing
-		got.Command = nil
-
 		if test.want != got {
 			t.Errorf("%v is not equal to %v", test.want, got)
 		}

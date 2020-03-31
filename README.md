@@ -2,7 +2,7 @@
 
 Build Image and push to a docker registry
 ```
-docker build -t drone-bazelisk-ecr .
+make docker-build
 ```
 
 Setup a secrets file for `drone exec` in _example/secrets.env_
@@ -12,6 +12,7 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 ```
 
+Run example locally
 ```
 cd example/
 drone exec --secret-file secrets.env
