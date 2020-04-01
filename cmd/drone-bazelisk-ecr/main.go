@@ -10,7 +10,7 @@ func main() {
 	errFatal(err)
 
 	// run bazelisk
-	err = p.exec()
+	err = p.run()
 	errFatal(err)
 }
 

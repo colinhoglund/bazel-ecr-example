@@ -47,7 +47,7 @@ func newPlugin() (plugin, error) {
 }
 
 // runs the bazel command
-func (p *plugin) exec() error {
+func (p *plugin) run() error {
 	cmd := exec.Command("bazel", "run", p.Target)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
